@@ -7,7 +7,9 @@
 
 Token-Oriented Object Notation (TOON) is a compact, human-readable format
 designed for passing structured data to Large Language Models with significantly
-reduced token usage. This is a Zig implementation of the
+reduced token usage.
+
+This is a Zig implementation of the
 [official TOON specification](https://github.com/toon-format/spec/blob/main/SPEC.md).
 
 ## Quick Example
@@ -58,8 +60,8 @@ Add the dependency to your `build.zig.zon`:
 ```zig
 .dependencies = .{
     .toon = .{
-        .url = "https://github.com/montanaflynn/toon-zig/archive/refs/tags/v0.1.0.tar.gz",
-        .hash = "...",
+        .url = "https://github.com/LatentEvals/toon-zig/archive/refs/tags/v0.1.0.tar.gz",
+        .hash = "toon-0.1.0-1wXXCQo3AQA8jk3o16MvgNLkKYZul2F4N9N_SlbVWczW",
     },
 },
 ```
