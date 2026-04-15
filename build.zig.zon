@@ -1,0 +1,14 @@
+.{
+    .name = .toon,
+    .version = "0.1.0",
+    .fingerprint = 0xcefd5ffd09d705d7,
+    .minimum_zig_version = "0.15.2",
+    .paths = .{
+        "build.zig",
+        "build.zig.zon",
+        "src",
+        "README.md",
+        "LICENSE",
+    },
+    .dependencies = .{},
+}
