@@ -1,0 +1,6 @@
+* text=auto eol=lf
+*.zig text eol=lf
+*.zon text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.yml text eol=lf
