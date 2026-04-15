@@ -5,9 +5,9 @@
 [![Tests](https://img.shields.io/badge/conformance-358%2F358-brightgreen)](https://github.com/toon-format/spec/tree/main/tests)
 [![Zig](https://img.shields.io/badge/zig-0.15.2-orange)](https://ziglang.org)
 
-Token-Oriented Object Notation (TOON) is a compact, human-readable format
-designed for passing structured data to Large Language Models with significantly
-reduced token usage.
+Token-Oriented Object Notation ([TOON](https://toonformat.dev/guide/getting-started.html#what-is-toon))
+is a compact, human-readable format designed for passing structured data to
+Large Language Models with significantly reduced token usage.
 
 This is a Zig implementation of the
 [official TOON specification](https://github.com/toon-format/spec/blob/main/SPEC.md).
@@ -155,17 +155,17 @@ Encodes a JSON value to a freshly allocated TOON string. Caller owns the slice.
 | Field | Type | Default | Description |
 |-------|------|---------|-------------|
 | `indent` | `u8` | `2` | Spaces per indentation level. |
-| `delimiter` | `Delimiter` | `.comma` | Document delimiter: `.comma`, `.tab`, or `.pipe`. |
-| `key_folding` | `KeyFolding` | `.off` | `.off` or `.safe` -- collapse single-key chains into dotted paths. |
-| `flatten_depth` | `?u32` | `null` | Max segments to fold (`null` = unlimited). v1.5+. |
+| `delimiter` | `Delimiter` | `.comma` | One of `.comma`, `.tab`, `.pipe`. |
+| `key_folding` | `KeyFolding` | `.off` | Fold single-key chains into dotted paths. |
+| `flatten_depth` | `?u32` | `null` | Max segments to fold (`null` = unlimited). |
 
 ### `DecodeOptions`
 
 | Field | Type | Default | Description |
 |-------|------|---------|-------------|
 | `indent` | `u8` | `2` | Expected spaces per indentation level. |
-| `strict` | `bool` | `true` | Enforce count, indentation, delimiter rules from spec §14. |
-| `expand_paths` | `ExpandPaths` | `.off` | `.off` or `.safe` -- split dotted keys into nested objects. v1.5+. |
+| `strict` | `bool` | `true` | Enforce spec §14 validation rules. |
+| `expand_paths` | `ExpandPaths` | `.off` | Split dotted keys into nested objects. |
 
 ## v1.5 Features
 
