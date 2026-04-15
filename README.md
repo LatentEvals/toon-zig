@@ -195,19 +195,22 @@ In `strict = true` mode (default), conflicting paths raise
 
 ## Error Handling
 
-`parse` returns a tagged `DecodeError`; common variants include:
+`parse` returns a tagged `DecodeError`. Common variants:
 
-- `error.MissingColon` -- key without trailing `:`.
-- `error.InvalidEscape` / `error.UnterminatedString` -- malformed quoted strings.
-- `error.CountMismatch` / `error.FieldCountMismatch` -- array length / row width
-  doesn't match the declared `[N]` / fields.
-- `error.InvalidIndentation` / `error.TabInIndentation` -- strict-mode whitespace
-  violations.
-- `error.BlankLineInArray` -- blank line inside an array body in strict mode.
-- `error.ExpansionConflict` -- path-expansion deep-merge conflict in strict mode.
+| Error | Meaning |
+|-------|---------|
+| `MissingColon` | Key without a trailing `:`. |
+| `InvalidEscape` | Unknown escape sequence in a quoted string. |
+| `UnterminatedString` | Quoted string missing its closing `"`. |
+| `CountMismatch` | Array element count differs from the declared `[N]`. |
+| `FieldCountMismatch` | Tabular row width differs from the field list. |
+| `InvalidIndentation` | Indent not a multiple of `indent` (strict mode). |
+| `TabInIndentation` | Tab character in indentation (strict mode). |
+| `BlankLineInArray` | Blank line inside an array body (strict mode). |
+| `ExpansionConflict` | Path-expansion deep-merge conflict (strict mode). |
 
-`stringify` only returns allocator/write errors plus `error.InvalidNumber` for
-non-finite numeric inputs that can't be normalized.
+`stringify` only returns allocator and write errors, plus `InvalidNumber`
+for non-finite numeric inputs.
 
 ## Testing
 
@@ -215,9 +218,9 @@ non-finite numeric inputs that can't be normalized.
 zig build test
 ```
 
-The test suite includes both the library's unit tests and the full
-language-agnostic conformance suite from the
-[spec repository](https://github.com/toon-format/spec/tree/main/tests).
+This runs both the library's unit tests and the full language-agnostic
+[conformance suite](https://github.com/toon-format/spec/tree/main/tests)
+from the spec repository.
 
 ## Resources
 
@@ -228,4 +231,12 @@ language-agnostic conformance suite from the
 
 ## License
 
-MIT
+MIT License
+
+Copyright (c) 2026 [Montana Flynn](https://montanaflynn.com) & [LatentEvals](https://latentevals.com)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
