@@ -470,9 +470,9 @@ fn isTabularCandidate(items: []const std.json.Value) bool {
 
 /// If items is tabular per §9.3, return the field order (from first element).
 /// Returned slice is owned by the first object (keys()) — do NOT free.
-fn detectTabular(items: []const std.json.Value) ?[][]const u8 {
+fn detectTabular(items: []const std.json.Value) ?[]const []const u8 {
     if (!isTabularCandidate(items)) return null;
-    return @constCast(items[0].object.keys());
+    return items[0].object.keys();
 }
 
 test "stringify primitive" {
