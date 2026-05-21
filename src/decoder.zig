@@ -960,3 +960,23 @@ test "isArrayHeaderLine basic" {
     try std.testing.expect(!isArrayHeaderLine("id: 42"));
     try std.testing.expect(!isArrayHeaderLine("hello"));
 }
+
+test "leading plus values decode as strings" {
+    const gpa = std.testing.allocator;
+    var result = try parse(gpa, "value: +1\nvalues[3]: +1,+1.5,+1e2\nexponent: 1e+2", .{});
+    defer result.deinit();
+
+    const value = result.value.object.get("value").?;
+    try std.testing.expect(value == .string);
+    try std.testing.expectEqualStrings("+1", value.string);
+
+    const values = result.value.object.get("values").?.array.items;
+    try std.testing.expectEqual(@as(usize, 3), values.len);
+    try std.testing.expectEqualStrings("+1", values[0].string);
+    try std.testing.expectEqualStrings("+1.5", values[1].string);
+    try std.testing.expectEqualStrings("+1e2", values[2].string);
+
+    const exponent = result.value.object.get("exponent").?;
+    try std.testing.expect(exponent == .integer);
+    try std.testing.expectEqual(@as(i64, 100), exponent.integer);
+}

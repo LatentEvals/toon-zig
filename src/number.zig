@@ -134,7 +134,7 @@ fn expandExponent(writer: *std.Io.Writer, s: []const u8) !void {
 pub fn isNumericToken(s: []const u8) bool {
     if (s.len == 0) return false;
     var i: usize = 0;
-    if (s[i] == '-' or s[i] == '+') i += 1;
+    if (s[i] == '-') i += 1;
     const int_start = i;
     if (i >= s.len or !std.ascii.isDigit(s[i])) return false;
     while (i < s.len and std.ascii.isDigit(s[i])) : (i += 1) {}
@@ -216,10 +216,14 @@ test "isNumericToken" {
     try std.testing.expect(isNumericToken("42"));
     try std.testing.expect(isNumericToken("-3.14"));
     try std.testing.expect(isNumericToken("1e-6"));
+    try std.testing.expect(isNumericToken("1e+6"));
     try std.testing.expect(isNumericToken("0.5"));
     try std.testing.expect(isNumericToken("0e1"));
     try std.testing.expect(!isNumericToken("05"));
     try std.testing.expect(!isNumericToken("0001"));
+    try std.testing.expect(!isNumericToken("+1"));
+    try std.testing.expect(!isNumericToken("+1.5"));
+    try std.testing.expect(!isNumericToken("+1e2"));
     try std.testing.expect(!isNumericToken(""));
     try std.testing.expect(!isNumericToken("abc"));
     try std.testing.expect(!isNumericToken("1."));
