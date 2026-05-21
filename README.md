@@ -60,8 +60,8 @@ Add the dependency to your `build.zig.zon`:
 ```zig
 .dependencies = .{
     .toon = .{
-        .url = "https://github.com/LatentEvals/toon-zig/archive/refs/tags/v0.1.0.tar.gz",
-        .hash = "toon-0.1.0-1wXXCQo3AQA8jk3o16MvgNLkKYZul2F4N9N_SlbVWczW",
+        .url = "https://github.com/LatentEvals/toon-zig/archive/refs/tags/v0.1.1.tar.gz",
+        .hash = "toon-0.1.1-1wXXCcQ9AQCwK2PZW0pIFzhEsRZj3o5PZFJXoF5IndoJ",
     },
 },
 ```
