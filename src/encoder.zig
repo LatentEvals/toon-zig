@@ -491,6 +491,21 @@ test "stringify primitive quoted" {
     try std.testing.expectEqualStrings("\"true\"", out);
 }
 
+test "stringify non-finite floats as null" {
+    const gpa = std.testing.allocator;
+    const values = [_]f64{
+        std.math.nan(f64),
+        std.math.inf(f64),
+        -std.math.inf(f64),
+    };
+
+    for (values) |value| {
+        const out = try stringify(gpa, .{ .float = value }, .{});
+        defer gpa.free(out);
+        try std.testing.expectEqualStrings("null", out);
+    }
+}
+
 test "stringify simple object" {
     const gpa = std.testing.allocator;
     var obj = std.json.ObjectMap.init(gpa);

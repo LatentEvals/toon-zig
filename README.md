@@ -209,8 +209,9 @@ In `strict = true` mode (default), conflicting paths raise
 | `BlankLineInArray` | Blank line inside an array body (strict mode). |
 | `ExpansionConflict` | Path-expansion deep-merge conflict (strict mode). |
 
-`stringify` only returns allocator and write errors, plus `InvalidNumber`
-for non-finite numeric inputs.
+`stringify` can return allocator, writer, and formatting errors. Non-finite
+float inputs (`NaN`, `+Infinity`, `-Infinity`) are normalized to `null` to
+match TOON encoding normalization.
 
 ## Testing
 
