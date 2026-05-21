@@ -355,19 +355,17 @@ const Encoder = struct {
         for (items) |item| {
             try self.w.writeByte('\n');
             try self.writeIndent(depth + 1);
-            try self.w.writeAll("- ");
-            try self.encodeListItem(item, depth + 1);
+            if (item == .object and item.object.count() == 0) {
+                try self.w.writeByte('-');
+            } else {
+                try self.w.writeAll("- ");
+                try self.encodeListItem(item, depth + 1);
+            }
         }
     }
 
     fn encodeListItemObject(self: *Encoder, obj: std.json.ObjectMap, depth: usize) EncodeErr!void {
         if (obj.count() == 0) {
-            // Bare hyphen: but we're past the "- " already. Rewind is awkward; emit nothing.
-            // The caller wrote "- "; we need an empty-object form — which is just "-" with no space.
-            // Since we already emitted "- ", the trailing space is incorrect. We'll emit nothing
-            // and rely on the general rule being "- " followed by content. For empty object, spec
-            // says a bare "-" at the list-item depth.
-            // TODO(spec): this path shouldn't happen if caller pre-checks; for now produce "".
             return;
         }
 
@@ -515,4 +513,23 @@ test "stringify simple object" {
     const out = try stringify(gpa, .{ .object = obj }, .{});
     defer gpa.free(out);
     try std.testing.expectEqualStrings("id: 123\nname: Ada", out);
+}
+
+test "stringify nested array empty object items as bare hyphen" {
+    const gpa = std.testing.allocator;
+    var parsed = try std.json.parseFromSlice(
+        std.json.Value,
+        gpa,
+        "{\"items\":[[{}],[\"x\",{}]]}",
+        .{},
+    );
+    defer parsed.deinit();
+
+    const out = try stringify(gpa, parsed.value, .{});
+    defer gpa.free(out);
+
+    try std.testing.expectEqualStrings(
+        "items[2]:\n  - [1]:\n    -\n  - [2]:\n    - x\n    -",
+        out,
+    );
 }
